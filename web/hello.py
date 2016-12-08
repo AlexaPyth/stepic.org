@@ -1,3 +1,11 @@
-def application (env, start_response):
-    start_response('200 OK', [('Content-Type', 'text/plain')])
-    return iter(['\r\n'.join(env['QUERY_STRING'].split('&')])
+def app(environ, start_response):
+    """Simplest possible application object"""
+    data = '\n'.join(environ['QUERY_STRING'].split('&'))
+    #data = 'Hello, World!\n'
+    status = '200 OK'
+    response_headers = [
+        ('Content-type','text/plain'),
+        ('Content-Length', str(len(data)))
+    ]
+    start_response(status, response_headers)
+    return iter([data])
